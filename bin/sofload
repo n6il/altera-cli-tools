@@ -1,14 +1,36 @@
-#!/bin/bash
+#!/bin/bash -x
+
+BINDIR="$(dirname $0)"
+ETCDIR="${BINDIR}/../etc"
+LIBDIR="${BINDIR}/../lib"
+
+if [[ $# -ne 1 ]]; then
+        echo "usage: $0: <input_sof>"
+        exit 1
+fi
+
+INPUT="$1"
+
+if [[ ! -e "$INPUT" ]]; then
+        ls "$INPUT"
+        exit 2
+fi
+
+IFBN="$(basename ${INPUT})"
+IFILE="${IFBN%.sof}"
+
+if [[ "$IFBN" != "${IFILE}.sof" ]]; then
+        echo "$INPUT: Must be sof file"
+        exit 3
+fi
+
 
 echo "*******************************"
 echo "* Step 3: Generate CDF"
 echo "*******************************"
 echo 
 
-BINDIR="$(dirname $0)"
-ETCDIR="${BINDIR}/../etc"
-LIBDIR="${BINDIR}/../lib"
-. $BINDIR/sofcdfgen $*
+. ${BINDIR}/sofcdfgen "${INPUT}"
 CDF="$TOUT"
 echo "** CDF=$CDF"
 

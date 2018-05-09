@@ -29,7 +29,7 @@ fi
 IFBN="$(basename $INPUT)"
 IFILE="${IFBN%.jic}"
 
-if [[ $IFBN == $IFILE ]]; then
+if [[ "$IFBN" != "${IFILE}.jic" ]]; then
 	echo "$INPUT: Must be jic file"
 	exit 3
 fi

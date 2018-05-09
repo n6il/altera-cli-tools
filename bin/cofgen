@@ -30,7 +30,7 @@ set -x
 IFBN="$(basename ${INPUT})"
 IFILE="${IFBN%.sof}"
 
-if [[ "$IFBN" == "$IFILE" ]]; then
+if [[ "$IFBN" != "${IFILE}.sof" ]]; then
 	echo "$INPUT: Must be sof file"
 	exit 3
 fi

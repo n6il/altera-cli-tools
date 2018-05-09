@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "*******************************"
+echo "* Step 3: Generate CDF"
+echo "*******************************"
+echo 
+
+. $BINDIR/jiccdfgen $*
+CDF="$TOUT"
+echo "** CDF=$CDF"
+
+echo "*******************************"
+echo "* Step 4: Program JIC to EPCS4"
+echo "*******************************"
+echo 
+
+set -x
+quartus_pgm "$CDF"
+set +x
+

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+echo "*******************************"
+echo "* Step 1: Generate JIC"
+echo "*******************************"
+echo 
+
+BINDIR="$(dirname $0)"
+. $BINDIR/cofgen "$*"
+JIC="$OUTPUT"
+COF="$TOUT"
+echo "** JIC=$JIC"
+echo "** COF=$COF"
+
+echo "*******************************"
+echo "* Step 2: Convert SOF to JIC"
+echo "*******************************"
+echo 
+
+set -x
+quartus_cpf -c "$COF"
+set +x
+
+echo "*******************************"
+echo "* Step 3: Generate CDF"
+echo "*******************************"
+echo 
+
+. $BINDIR/jiccdfgen "$JIC"
+CDF="$TOUT"
+echo "** CDF=$CDF"
+
+echo "*******************************"
+echo "* Step 4: Program JIC to EPCS4"
+echo "*******************************"
+echo 
+
+set -x
+quartus_pgm "$CDF"
+set +x
+

@@ -1,0 +1,61 @@
+#!/bin/bash
+
+BINDIR="$(dirname $0)"
+ETCDIR="${BINDIR}/../etc"
+LIBDIR="${BINDIR}/../lib"
+
+if [[ $# -ne 1 ]]; then
+	echo "usage: $0: <input_sof>"
+	exit 1
+fi
+
+INPUT="$1"
+OUTPUT="$2"
+
+PWD="$(pwd)"
+IPATH="$(dirname $INPUT)"
+#echo "IPATH=$IPATH"
+if [[ "$IPATH" == "." ]]; then
+	echo "Assuming IPATH=$PWD"
+	IPATH="$PWD"
+	INPUT="$PWD/$INPUT"
+fi
+
+if [[ ! -e $INPUT ]]; then
+	ls "$INPUT"
+	exit 2
+fi
+
+IFBN="$(basename $INPUT)"
+IFILE="${IFBN%.sof}"
+
+if [[ $IFBN == $IFILE ]]; then
+	echo "$INPUT: Must be sof file"
+	exit 3
+fi
+
+OFILE="$IFILE"
+OPATH="$IPATH"
+OUTPUT="$OPATH/$OFILE.jic"
+
+#echo "INPUT=$INPUT"
+#echo "IPATH=$IPATH"
+#echo "IFILE=$IFILE"
+echo "INPUT=$INPUT"
+echo "OUTPUT=$OUTPUT"
+
+
+CDFT="${ETCDIR}/sof_load.cdf.template"
+TEMPLATE="$CDFT"
+SUFFIX=".cdf"
+TOUT="$OPATH/${OFILE}${SUFFIX}"
+echo "TEMPLATE=$TEMPLATE"
+echo "TOUT=$TOUT"
+
+sed_cmd="s#@@IPATH@@#$IPATH#g; s#@@IFILE@@#$IFILE#g; s#@@OPATH@@#$OPATH#g; s#@@OFILE@@#$OFILE#g;"
+
+echo
+echo "Generating $SUFFIX template..."
+set -x
+sed -e "${sed_cmd}" <"${TEMPLATE}" >"${TOUT}"
+set +x

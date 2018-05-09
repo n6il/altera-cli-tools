@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BINDIR="$(dirname $0)"
+ETCDIR="${BINDIR}/../etc"
+LIBDIR="${BINDIR}/../lib"
+
+CDF="${LIBDIR}/DE1_NIOS.cdf"
+echo "** CDF=$CDF"
+
+echo "*******************************"
+echo "* Step 4: Program NIOS to FPGA"
+echo "*******************************"
+echo 
+
+set -x
+quartus_pgm "$CDF"
+set +x
+

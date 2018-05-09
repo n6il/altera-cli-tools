@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ $# != 2 ]; then
+	echo "Usage: $0 <ROM.rom> <ADDR>"
+	exit 1
+fi
+ROM=$1
+ADDR=$2
+flash="${ROM%.rom}.flash"
+echo "ROM=$ROM"
+echo "ADDR=$ADDR"
+echo "flash=$flash"
+bin2flash --input="${ROM}" --output="${flash}" --location="${ADDR}"
+nios2-flash-programmer --base=0 "${flash}"

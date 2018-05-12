@@ -23,9 +23,26 @@ if ! [[ $yournumber =~ $re ]] ; then
 	exit 3
 fi
 
+echo "*******************************"
+echo "* Step 1: Load NIOS"
+echo "*******************************"
+echo
+
+${BINDIR}/niosload
+
+echo "*******************************"
+echo "* Step 2: Convert ROM to FLASH"
+echo "*******************************"
+echo
+
 flash="${ROM%.rom}.flash"
 echo "ROM=$ROM"
 echo "ADDR=$ADDR"
 echo "flash=$flash"
 bin2flash --input="${ROM}" --output="${flash}" --location="${ADDR}"
+
+echo "*******************************"
+echo "* Step 3: Program the FLASH"
+echo "*******************************"
+echo
 nios2-flash-programmer --base=0 "${flash}"

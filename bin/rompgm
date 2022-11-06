@@ -18,7 +18,7 @@ if [[ ! -e "$ROM" ]]; then
 fi
 
 re='^0x[0-9A-Fa-f]+$'
-if ! [[ $yournumber =~ $re ]] ; then
+if ! [[ $ADDR =~ $re ]] ; then
 	echo "ADDR $ADDR: Must be in hex 0x12ab format"
 	exit 3
 fi

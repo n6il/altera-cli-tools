@@ -5,7 +5,11 @@ specifically the DE1.
 
 ## Getting Started
 
-These tools require that the Altera NIOS 
+These tools require that the Altera NIOS tools are installed and are in the current path.
+
+Before running any of these tools you must run the following:
+
+    ~/altera/13.0sp1/nios2eds/nios2_command_shell.sh
 
 Usage of Altera CLI Tools
 ---
